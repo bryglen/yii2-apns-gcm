@@ -4,6 +4,7 @@
     "type": "yii2-extension",
     "keywords": ["yii2"," extension"," apns"," gcm"],
     "license": "MIT",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Bryan Jayson Tan",
