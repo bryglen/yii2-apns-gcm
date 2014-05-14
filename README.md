@@ -28,7 +28,7 @@ in your main.php your configuration would look like this
 ```php
 'components' => [
 	'apns' => [
-		'class' => 'bryglen\yii2-apns-gcm\Apns',
+		'class' => 'bryglen\apnsgcm\Apns',
 		'environment' => \bryglen\apnsgcm\Apns::ENVIRONMENT_SANDBOX,
 		'pemFile' => dirname(__FILE__).'/apnssert/apns-dev.pem',
 		// 'retryTimes' => 3,
@@ -37,12 +37,12 @@ in your main.php your configuration would look like this
 		]
 	],
 	'gcm' => [
-		'class' => 'bryglen\yii2-apns-gcm\Gcm',
+		'class' => 'bryglen\apnsgcm\Gcm',
 		'apiKey' => 'your_api_key',
 	],
 	// using both gcm and apns, make sure you have 'gcm' and 'apns' in your component
 	'apnsGcm' => [
-		'class' => 'bryglen\yii2-apns-gcm\ApnsGcm',
+		'class' => 'bryglen\apnsgcm\ApnsGcm',
 		// custom name for the component, by default we will use 'gcm' and 'apns'
 		//'gcm' => 'gcm',
 		//'apns' => 'apns',
