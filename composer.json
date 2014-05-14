@@ -1,0 +1,22 @@
+{
+    "name": "bryglen/yii2-apns-gcm",
+    "description": "Yii 2 Apns and Gcm together",
+    "type": "yii2-extension",
+    "keywords": ["yii2"," extension"," apns"," gcm"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bryan Jayson Tan",
+            "email": "bryantan16@gmail.com"
+        }
+    ],
+    "require": {
+        "duccio/apns-php": "dev-master",
+        "php-gcm/php-gcm": "1.0.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "bryglen\\apnsgcm\\": ""
+        }
+    }
+}
