@@ -29,7 +29,7 @@ in your main.php your configuration would look like this
 'components' => [
 	'apns' => [
 		'class' => 'bryglen\yii2-apns-gcm\Apns',
-		'environment' => bryglen\apnsgcm\Apns::ENVIRONMENT_SANDBOX,
+		'environment' => \bryglen\apnsgcm\Apns::ENVIRONMENT_SANDBOX,
 		'pemFile' => dirname(__FILE__).'/apnssert/apns-dev.pem',
 		// 'retryTimes' => 3,
 		'options' => [
@@ -57,8 +57,8 @@ Usage
 **Usage using APNS only**
 
 ```php
-/* @var $apnsGcm bryglen\apnsgcm\Apns */
-$apns = Yii::$app()->apns;
+/* @var $apnsGcm \bryglen\apnsgcm\Apns */
+$apns = Yii::$app->apns;
 $apns->send($push_tokens, $message,
   [
     'customProperty_1' => 'Hello',
@@ -74,8 +74,8 @@ $apns->send($push_tokens, $message,
 **Usage using GCM only**
 
 ```php
-/* @var $apnsGcm bryglen\apnsgcm\Gcm */
-$gcm = Yii::$app()->gcm;
+/* @var $apnsGcm \bryglen\apnsgcm\Gcm */
+$gcm = Yii::$app->gcm;
 $gcm->send($push_tokens, $message,
   [
     'customerProperty' => 1,
@@ -91,9 +91,9 @@ $gcm->send($push_tokens, $message,
 **Send using Google Cloud Messaging**
 
 ```php
-/* @var $apnsGcm bryglen\apnsgcm\ApnsGcm */
-$apnsGcm = Yii::$app()->apnsGcm;
-$apnsGcm->send(bryglen\apnsgcm\ApnsGcm::TYPE_GCM, $push_tokens, $message,
+/* @var $apnsGcm \bryglen\apnsgcm\ApnsGcm */
+$apnsGcm = Yii::$app->apnsGcm;
+$apnsGcm->send(\bryglen\apnsgcm\ApnsGcm::TYPE_GCM, $push_tokens, $message,
   [
     'customerProperty' => 1
   ],
@@ -106,9 +106,9 @@ $apnsGcm->send(bryglen\apnsgcm\ApnsGcm::TYPE_GCM, $push_tokens, $message,
 **Send using Apple push notification service**
 
 ```php
-/* @var $apnsGcm bryglen\apnsgcm\ApnsGcm */
-$apnsGcm = Yii::$app()->apnsGcm;
-$apnsGcm->send(bryglen\apnsgcm\ApnsGcm::TYPE_APNS, $push_tokens, $message,
+/* @var $apnsGcm \bryglen\apnsgcm\ApnsGcm */
+$apnsGcm = Yii::$app->apnsGcm;
+$apnsGcm->send(\bryglen\apnsgcm\ApnsGcm::TYPE_APNS, $push_tokens, $message,
   [
     'customerProperty' => 1
   ],
