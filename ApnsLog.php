@@ -9,7 +9,7 @@ namespace bryglen\apnsgcm;
 use Yii;
 use yii\log\Logger;
 
-class ApnsLog implements ApnsPHP_Log_Interface
+class ApnsLog implements \ApnsPHP_Log_Interface
 {
     /**
      * Logs a message.

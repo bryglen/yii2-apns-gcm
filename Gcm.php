@@ -58,7 +58,7 @@ class Gcm extends AbstractApnsGcm
             return null;
         }
 
-        $message = new PHP_GCM\Message();
+        $message = new \PHP_GCM\Message();
         foreach($args as $method => $value) {
             $value = is_array($value) ? $value : array($value);
             call_user_func_array(array($message, $method), $value);
@@ -73,13 +73,13 @@ class Gcm extends AbstractApnsGcm
             // send a message
             $result = $this->getClient()->send($message, $token, $this->retryTimes);
             $this->success = $result ? true : false;
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->errors[] = $e->getMessage();
             // $deviceRegistrationId was null
-        } catch (PHP_GCM\InvalidRequestException $e) {
+        } catch (\PHP_GCM\InvalidRequestException $e) {
             $this->errors[] = $e->getMessage();
             // server returned HTTP code other than 200 or 503
-        } catch (CException $e) {
+        } catch (\Exception $e) {
             $this->errors[] = $e->getMessage();
             // message could not be sent
         }
@@ -123,7 +123,7 @@ class Gcm extends AbstractApnsGcm
             return null;
         }
 
-        $message = new PHP_GCM\Message();
+        $message = new \PHP_GCM\Message();
         foreach($args as $method => $value) {
             $value = is_array($value) ? $value : array($value);
             call_user_func_array(array($message, $method), $value);
@@ -138,10 +138,10 @@ class Gcm extends AbstractApnsGcm
             $result = $this->getClient()->sendMulti($message, $tokens, $this->retryTimes);
 
             $this->success = $result->getSuccess();;
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->errors[] = $e->getMessage();
             // $deviceRegistrationId was null
-        } catch (PHP_GCM\InvalidRequestException $e) {
+        } catch (\PHP_GCM\InvalidRequestException $e) {
             $this->errors[] = $e->getMessage();
             // server returned HTTP code other than 200 or 503
         } catch (\Exception $e) {

@@ -11,6 +11,21 @@ use yii\base\Application;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 
+/**
+ * Class Apns
+ *
+ * @method Apns add(\ApnsPHP_Message $message)
+ * @method Apns getQueue($bEmpty = true)
+ * @method Apns getErrors($bEmpty = true)
+ * @method Apns getSendRetryTimes()
+ * @method Apns setSendRetryTimes($nRetryTimes)
+ * @method Apns disconnect()
+ * @method Apns connect()
+ * @method Apns getSocketSelectTimeout()
+ * @method Apns setSocketSelectTimeout($nSelectTimeout)
+ *
+ * @package bryglen\apnsgcm
+ */
 class Apns extends AbstractApnsGcm
 {
     const ENVIRONMENT_SANDBOX = 'sandbox';
@@ -52,13 +67,13 @@ class Apns extends AbstractApnsGcm
     }
 
     /**
-     * @return ApnsPHP_Push|null
+     * @return \ApnsPHP_Push|null
      */
     public function getClient()
     {
         if ($this->_client === null) {
-            $this->_client = new ApnsPHP_Push(
-                $this->environment == self::ENVIRONMENT_PRODUCTION ? ApnsPHP_Push::ENVIRONMENT_PRODUCTION : ApnsPHP_Push::ENVIRONMENT_SANDBOX,
+            $this->_client = new \ApnsPHP_Push(
+                $this->environment == self::ENVIRONMENT_PRODUCTION ? \ApnsPHP_Push::ENVIRONMENT_PRODUCTION : \ApnsPHP_Push::ENVIRONMENT_SANDBOX,
                 $this->pemFile
             );
 
@@ -110,7 +125,7 @@ class Apns extends AbstractApnsGcm
             return null;
         }
 
-        $message = new ApnsPHP_Message($token);
+        $message = new \ApnsPHP_Message($token);
         $message->setText($text);
         foreach($args as $method => $value) {
             if (strpos($message, 'set') === false) {
@@ -140,7 +155,7 @@ class Apns extends AbstractApnsGcm
      * @param $text
      * @param array $payloadData
      * @param array $args
-     * @return ApnsPHP_Message|null
+     * @return \ApnsPHP_Message|null
      */
     public function sendMulti($tokens, $text, $payloadData = array(), $args = array())
     {
@@ -151,7 +166,7 @@ class Apns extends AbstractApnsGcm
             return null;
         }
 
-        $message = new ApnsPHP_Message();
+        $message = new \ApnsPHP_Message();
         foreach ($tokens as $token) {
             $message->addRecipient($token);
         }
