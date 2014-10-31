@@ -41,17 +41,17 @@ class Apns extends AbstractApnsGcm
      * additional information for the push provider
      * @var array
      */
-    public $options = array();
+    public $options = [];
 
     public $logger = 'bryglen\apnsgcm\ApnsLog';
 
     public function init()
     {
-        if (!in_array($this->environment, array(self::ENVIRONMENT_SANDBOX, self::ENVIRONMENT_PRODUCTION))) {
+        if (!in_array($this->environment, [self::ENVIRONMENT_SANDBOX, self::ENVIRONMENT_PRODUCTION])) {
             throw new InvalidConfigException('Environment is invalid.');
         }
         if (!$this->pemFile || !file_exists($this->pemFile)) {
-            throw new InvalidConfigException('Push SSL certificate is required.');
+            throw new InvalidConfigException('Invalid Pem file');
         }
 
         Yii::$app->on(Application::EVENT_AFTER_REQUEST, function($event) {
@@ -83,9 +83,9 @@ class Apns extends AbstractApnsGcm
             }
             foreach ($this->options as $key => $value) {
                 $method = 'set' . ucfirst($key);
-                $value = is_array($value) ? $value : array($value);
+                $value = is_array($value) ? $value : [$value];
 
-                call_user_func_array(array($this->_client, $method), $value);
+                call_user_func_array([$this->_client, $method], $value);
             }
             $this->_client->connect();
         }
@@ -97,16 +97,18 @@ class Apns extends AbstractApnsGcm
      *
      * Usage 1:
      * <code>
-     * $this->send('some-valid-token','some-message',
-     * array(
-     *   'custom_data_key_1'=>'custom_data_value_1',
-     *   'custom_data_key_2'=>'custom_data_value_2',
-     * ),
-     * array(
-     *   'badge'=>2,
-     *   'expiry'=>30
-     *   'sound'=>'default',
-     * )
+     * $this->send(
+     *  'some-valid-token',
+     *  'some-message',
+     *  [
+     *    'custom_data_key_1'=>'custom_data_value_1',
+     *    'custom_data_key_2'=>'custom_data_value_2',
+     *  ],
+     *  [
+     *    'badge'=>2,
+     *    'expiry'=>30
+     *    'sound'=>'default',
+     *  ]
      * );
      * </code>
      * @param string $token
@@ -116,11 +118,11 @@ class Apns extends AbstractApnsGcm
      * @return ApnsPHP_Message|null
      * @tutorial https://github.com/duccio/ApnsPHP
      */
-    public function send($token, $text, $payloadData = array(), $args = array())
+    public function send($token, $text, $payloadData = [], $args = [])
     {
         // check if its dry run or not
         if ($this->dryRun === true) {
-            $this->log($token, $text, $payloadData, $args = array());
+            $this->log($token, $text, $payloadData, $args);
             $this->success = true;
             return null;
         }
@@ -131,8 +133,8 @@ class Apns extends AbstractApnsGcm
             if (strpos($message, 'set') === false) {
                 $method = 'set' . ucfirst($method);
             }
-            $value = is_array($value) ? $value : array($value);
-            call_user_func_array(array($message, $method), $value);
+            $value = is_array($value) ? $value : [$value];
+            call_user_func_array([$message, $method], $value);
         }
         // set a custom payload data
         foreach ($payloadData as $key => $value) {
@@ -157,12 +159,12 @@ class Apns extends AbstractApnsGcm
      * @param array $args
      * @return \ApnsPHP_Message|null
      */
-    public function sendMulti($tokens, $text, $payloadData = array(), $args = array())
+    public function sendMulti($tokens, $text, $payloadData = [], $args = [])
     {
-        $tokens = is_array($tokens) ? $tokens : array($tokens);
+        $tokens = is_array($tokens) ? $tokens : [$tokens];
         // check if its dry run or not
         if ($this->dryRun === true) {
-            $this->log($tokens, $text, $payloadData, $args = array());
+            $this->log($tokens, $text, $payloadData, $args = []);
             return null;
         }
 
@@ -175,8 +177,8 @@ class Apns extends AbstractApnsGcm
             if (strpos($message, 'set') === false) {
                 $method = 'set' . ucfirst($method);
             }
-            $value = is_array($value) ? $value : array($value);
-            call_user_func_array(array($message, $method), $value);
+            $value = is_array($value) ? $value : [$value];
+            call_user_func_array([$message, $method], $value);
         }
         // set a custom payload data
         foreach ($payloadData as $key => $value) {
@@ -198,7 +200,7 @@ class Apns extends AbstractApnsGcm
     {
         $client = $this->getClient();
         if (method_exists($client, $method))
-            return call_user_func_array(array($client, $method), $params);
+            return call_user_func_array([$client, $method], $params);
 
         return parent::__call($method, $params);
     }

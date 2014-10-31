@@ -15,10 +15,10 @@ abstract class AbstractApnsGcm extends Component
     public $retryTimes = 3;
     public $dryRun = false;
     public $enableLogging = false;
-    public $errors = array();
+    public $errors = [];
     public $success = false;
 
-    public function log($tokens, $text, $payloadData = array(), $args = array())
+    public function log($tokens, $text, $payloadData = [], $args = [])
     {
         $payloadData = http_build_query($payloadData);
         $args = http_build_query($args);
@@ -30,6 +30,6 @@ abstract class AbstractApnsGcm extends Component
         Yii::getLogger()->log($msg, Logger::LEVEL_INFO, 'bryglen/apnsgcm');
     }
 
-    abstract public function send($token, $text, $payloadData = array(), $args = array());
-    abstract public function sendMulti($tokens, $text, $payloadData = array(), $args = array());
+    abstract public function send($token, $text, $payloadData = [], $args = []);
+    abstract public function sendMulti($tokens, $text, $payloadData = [], $args = []);
 } 

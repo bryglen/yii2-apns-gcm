@@ -27,7 +27,7 @@ class ApnsGcm extends Component
      */
     public $gcm = 'gcm';
 
-    public $errors = array();
+    public $errors = [];
     public $success = false;
 
     private $_gcmClient;
@@ -69,7 +69,7 @@ class ApnsGcm extends Component
      * @param array $args
      * @return null|\PHP_GCM\Message
      */
-    public function send($type, $token, $text, $payloadData = array(), $args = array())
+    public function send($type, $token, $text, $payloadData = [], $args = [])
     {
         $client = null;
         $result = null;
@@ -87,7 +87,7 @@ class ApnsGcm extends Component
         return $result;
     }
 
-    public function sendMulti($type, $tokens, $text, $payloadData = array(), $args = array())
+    public function sendMulti($type, $tokens, $text, $payloadData = [], $args = [])
     {
         $client = null;
         $result = null;

@@ -38,11 +38,14 @@ class Gcm extends AbstractApnsGcm
      *
      * Usage 1:
      * <code>
-     * $this->send('some-valid-token','some-message',
-     * array(
-     *   'custom_data_key_1'=>'custom_data_value_1',
-     *   'custom_data_key_2'=>'custom_data_value_2',
-     * ));
+     * $this->send(
+     *  'some-valid-token',
+     *  'some-message',
+     *  [
+     *    'custom_data_key_1'=>'custom_data_value_1',
+     *    'custom_data_key_2'=>'custom_data_value_2',
+     *  ]
+     * );
      * </code>
      * @param string $token
      * @param $text
@@ -50,7 +53,7 @@ class Gcm extends AbstractApnsGcm
      * @param array $args
      * @return null|\PHP_GCM\Message
      */
-    public function send($token, $text, $payloadData = array(), $args = array())
+    public function send($token, $text, $payloadData = [], $args = [])
     {
         // check if its dry run or not
         if ($this->dryRun === true) {
@@ -60,8 +63,8 @@ class Gcm extends AbstractApnsGcm
 
         $message = new \PHP_GCM\Message();
         foreach($args as $method => $value) {
-            $value = is_array($value) ? $value : array($value);
-            call_user_func_array(array($message, $method), $value);
+            $value = is_array($value) ? $value : [$value];
+            call_user_func_array([$message, $method], $value);
         }
         // set a custom payload data
         $payloadData['message'] = $text;
@@ -92,20 +95,26 @@ class Gcm extends AbstractApnsGcm
      *
      * Usage 1:
      * <code>
-     * $this->sendMulti('some-valid-token','some-message',
-     * array(
-     *   'custom_data_key_1'=>'custom_data_value_1',
-     *   'custom_data_key_2'=>'custom_data_value_2',
-     * ));
+     * $this->sendMulti(
+     *  'some-valid-token',
+     *  'some-message',
+     *  [
+     *   'custom_data_key_1' => 'custom_data_value_1',
+     *   'custom_data_key_2' => 'custom_data_value_2',
+     *  ]
+     * );
      * </code>
      *
      * Usage 2:
      * <code>
-     * $this->sendMulti(array('valid-token-1','valid-token-2','valid-token-3'),'some-message',
-     * array(
+     * $this->sendMulti(
+     *  ['valid-token-1','valid-token-2','valid-token-3'],
+     *  'some-message',
+     *  [
      *   'custom_data_key_1'=>'custom_data_value_1',
      *   'custom_data_key_2'=>'custom_data_value_2',
-     * ));
+     *  ]
+     * );
      * </code>
      * @param string|array $tokens
      * @param $text
@@ -113,9 +122,9 @@ class Gcm extends AbstractApnsGcm
      * @param array $args
      * @return null|\PHP_GCM\Message
      */
-    public function sendMulti($tokens, $text, $payloadData = array(), $args = array())
+    public function sendMulti($tokens, $text, $payloadData = [], $args = [])
     {
-        $tokens = is_array($tokens) ? $tokens : array($tokens);
+        $tokens = is_array($tokens) ? $tokens : [$tokens];
         // check if its dry run or not
         if ($this->dryRun === true) {
             $this->log($tokens, $text, $payloadData, $args);
@@ -125,8 +134,8 @@ class Gcm extends AbstractApnsGcm
 
         $message = new \PHP_GCM\Message();
         foreach($args as $method => $value) {
-            $value = is_array($value) ? $value : array($value);
-            call_user_func_array(array($message, $method), $value);
+            $value = is_array($value) ? $value : [$value];
+            call_user_func_array([$message, $method], $value);
         }
         // set a custom payload data
         $payloadData['message'] = $text;
@@ -156,7 +165,7 @@ class Gcm extends AbstractApnsGcm
     {
         $client = $this->getClient();
         if (method_exists($client, $method))
-            return call_user_func_array(array($client, $method), $params);
+            return call_user_func_array([$client, $method], $params);
 
         return parent::__call($method, $params);
     }
