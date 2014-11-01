@@ -147,7 +147,7 @@ class Apns extends AbstractApnsGcm
         $this->getClient()->send();
 
         $this->errors = $this->getClient()->getErrors();
-        $this->success = $this->getClient()->getErrors() ? true : false;
+        $this->success = empty($this->errors) ? true : false;
 
         return $message;
     }
