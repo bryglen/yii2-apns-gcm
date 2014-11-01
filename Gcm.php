@@ -80,7 +80,11 @@ class Gcm extends AbstractApnsGcm
             $this->errors[] = $e->getMessage();
             // $deviceRegistrationId was null
         } catch (\PHP_GCM\InvalidRequestException $e) {
-            $this->errors[] = $e->getMessage();
+            if ($e->getMessage()) {
+                $this->errors[] = $e->getMessage();
+            } else {
+                $this->errors[] = sprintf("Received error code %s from GCM Service", $e->getCode());
+            }
             // server returned HTTP code other than 200 or 503
         } catch (\Exception $e) {
             $this->errors[] = $e->getMessage();
@@ -151,7 +155,11 @@ class Gcm extends AbstractApnsGcm
             $this->errors[] = $e->getMessage();
             // $deviceRegistrationId was null
         } catch (\PHP_GCM\InvalidRequestException $e) {
-            $this->errors[] = $e->getMessage();
+            if ($e->getMessage()) {
+                $this->errors[] = $e->getMessage();
+            } else {
+                $this->errors[] = sprintf("Received error code %s from GCM Service", $e->getCode());
+            }
             // server returned HTTP code other than 200 or 503
         } catch (\Exception $e) {
             $this->errors[] = $e->getMessage();
