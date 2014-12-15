@@ -22,7 +22,7 @@ abstract class AbstractApnsGcm extends Component
     {
         $payloadData = http_build_query($payloadData);
         $args = http_build_query($args);
-        $tokens = is_array($tokens) ? implode(', ' , $tokens) : $tokens;
+        $tokens = is_array($tokens) ? implode(', ', $tokens) : $tokens;
         $msg = "Sending push notifications to " . $tokens . "\n" .
             "message: {$text}\n" .
             "payload data: " . str_replace('&', ', ', $payloadData) . "\n" .
@@ -31,5 +31,6 @@ abstract class AbstractApnsGcm extends Component
     }
 
     abstract public function send($token, $text, $payloadData = [], $args = []);
+
     abstract public function sendMulti($tokens, $text, $payloadData = [], $args = []);
 } 

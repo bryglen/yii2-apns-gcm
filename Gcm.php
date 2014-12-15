@@ -62,14 +62,14 @@ class Gcm extends AbstractApnsGcm
         }
 
         $message = new \PHP_GCM\Message();
-        foreach($args as $method => $value) {
+        foreach ($args as $method => $value) {
             $value = is_array($value) ? $value : [$value];
             call_user_func_array([$message, $method], $value);
         }
         // set a custom payload data
         $payloadData['message'] = $text;
-        foreach($payloadData as $key=>$value){
-            $message->addData($key,$value);
+        foreach ($payloadData as $key => $value) {
+            $message->addData($key, $value);
         }
 
         try {
@@ -137,14 +137,14 @@ class Gcm extends AbstractApnsGcm
         }
 
         $message = new \PHP_GCM\Message();
-        foreach($args as $method => $value) {
+        foreach ($args as $method => $value) {
             $value = is_array($value) ? $value : [$value];
             call_user_func_array([$message, $method], $value);
         }
         // set a custom payload data
         $payloadData['message'] = $text;
-        foreach($payloadData as $key=>$value){
-            $message->addData($key,$value);
+        foreach ($payloadData as $key => $value) {
+            $message->addData($key, $value);
         }
         try {
             // send a message
@@ -172,8 +172,9 @@ class Gcm extends AbstractApnsGcm
     public function __call($method, $params)
     {
         $client = $this->getClient();
-        if (method_exists($client, $method))
+        if (method_exists($client, $method)) {
             return call_user_func_array([$client, $method], $params);
+        }
 
         return parent::__call($method, $params);
     }

@@ -54,11 +54,14 @@ class Apns extends AbstractApnsGcm
             throw new InvalidConfigException('Invalid Pem file');
         }
 
-        Yii::$app->on(Application::EVENT_AFTER_REQUEST, function($event) {
-            if ($this->getClient()) {
-                $this->getClient()->disconnect();
+        Yii::$app->on(
+            Application::EVENT_AFTER_REQUEST,
+            function ($event) {
+                if ($this->getClient()) {
+                    $this->getClient()->disconnect();
+                }
             }
-        });
+        );
     }
 
     public function closeConnection()
@@ -129,7 +132,7 @@ class Apns extends AbstractApnsGcm
 
         $message = new \ApnsPHP_Message($token);
         $message->setText($text);
-        foreach($args as $method => $value) {
+        foreach ($args as $method => $value) {
             if (strpos($message, 'set') === false) {
                 $method = 'set' . ucfirst($method);
             }
@@ -173,7 +176,7 @@ class Apns extends AbstractApnsGcm
             $message->addRecipient($token);
         }
         $message->setText($text);
-        foreach($args as $method => $value) {
+        foreach ($args as $method => $value) {
             if (strpos($message, 'set') === false) {
                 $method = 'set' . ucfirst($method);
             }
@@ -199,8 +202,9 @@ class Apns extends AbstractApnsGcm
     public function __call($method, $params)
     {
         $client = $this->getClient();
-        if (method_exists($client, $method))
+        if (method_exists($client, $method)) {
             return call_user_func_array([$client, $method], $params);
+        }
 
         return parent::__call($method, $params);
     }
