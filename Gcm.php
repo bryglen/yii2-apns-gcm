@@ -79,6 +79,7 @@ class Gcm extends AbstractApnsGcm
             if(!$this->success) {
                 $this->errors[] = $result->getErrorCode();
             }
+            // HTTP code 200, but message sent with error
         } catch (\InvalidArgumentException $e) {
             $this->errors[] = $e->getMessage();
             // $deviceRegistrationId was null
