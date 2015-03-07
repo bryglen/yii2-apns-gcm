@@ -73,6 +73,7 @@ class ApnsGcm extends Component
     {
         $client = null;
         $result = null;
+        $this->errors = [];
         if ($type == self::TYPE_GCM) {
             $client = $this->getGcmClient();
             $result = $client->send($token, $text, $payloadData, $args);
@@ -83,6 +84,9 @@ class ApnsGcm extends Component
 
             $this->success = $client->success;
         }
+        if(!$this->success) {
+            $this->errors = $client->errors;
+        }
 
         return $result;
     }
@@ -91,6 +95,7 @@ class ApnsGcm extends Component
     {
         $client = null;
         $result = null;
+        $this->errors = [];
         if ($type == self::TYPE_GCM) {
             $client = $this->getGcmClient();
             $result = $client->sendMulti($tokens, $text, $payloadData, $args);
@@ -100,6 +105,9 @@ class ApnsGcm extends Component
             $result = $client->sendMulti($tokens, $text, $payloadData, $args);
 
             $this->success = $client->success;
+        }
+        if(!$this->success) {
+            $this->errors = $client->errors;
         }
 
         return $result;
