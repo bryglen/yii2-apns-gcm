@@ -76,7 +76,7 @@ class Gcm extends AbstractApnsGcm
             // send a message
             $result = $this->getClient()->send($message, $token, $this->retryTimes);
             $this->success = $result->getErrorCode() != null ? false : true;
-            if(!$this->success) {
+            if (!$this->success) {
                 $this->errors[] = $result->getErrorCode();
             }
             // HTTP code 200, but message sent with error

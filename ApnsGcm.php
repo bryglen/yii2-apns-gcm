@@ -84,7 +84,7 @@ class ApnsGcm extends Component
 
             $this->success = $client->success;
         }
-        if(!$this->success) {
+        if (!$this->success) {
             $this->errors = $client->errors;
         }
 
@@ -106,7 +106,7 @@ class ApnsGcm extends Component
 
             $this->success = $client->success;
         }
-        if(!$this->success) {
+        if (!$this->success) {
             $this->errors = $client->errors;
         }
 
