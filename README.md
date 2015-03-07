@@ -16,7 +16,7 @@ php composer.phar require --prefer-dist bryglen/yii2-apns-gcm "dev-master"
 or add
 
 ```
-"bryglen/yii2-apns-gcm": "dev-master"
+"bryglen/yii2-apns-gcm": "1.0.1"
 ```
 
 to the require section of your `composer.json` file.
@@ -50,6 +50,9 @@ in your main.php your configuration would look like this
 ]
 ```
 
+Online Tester
+-------------
+Please visit the link for online tester [http://apns-gcm.bryantan.info](http://apns-gcm.bryantan.info)
 
 Usage
 -----
