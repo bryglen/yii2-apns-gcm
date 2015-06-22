@@ -45,7 +45,7 @@ class Apns extends AbstractApnsGcm
 
     public $logger = 'bryglen\apnsgcm\ApnsLog';
 
-    public function init()
+    private function _checkConfig()
     {
         if (!in_array($this->environment, [self::ENVIRONMENT_SANDBOX, self::ENVIRONMENT_PRODUCTION])) {
             throw new InvalidConfigException('Environment is invalid.');
@@ -53,7 +53,10 @@ class Apns extends AbstractApnsGcm
         if (!$this->pemFile || !file_exists($this->pemFile)) {
             throw new InvalidConfigException('Invalid Pem file');
         }
+    }
 
+    public function init()
+    {
         Yii::$app->on(
             Application::EVENT_AFTER_REQUEST,
             function ($event) {
@@ -74,6 +77,7 @@ class Apns extends AbstractApnsGcm
      */
     public function getClient()
     {
+        $this->_checkConfig();
         if ($this->_client === null) {
             $this->_client = new \ApnsPHP_Push(
                 $this->environment == self::ENVIRONMENT_PRODUCTION ? \ApnsPHP_Push::ENVIRONMENT_PRODUCTION : \ApnsPHP_Push::ENVIRONMENT_SANDBOX,
