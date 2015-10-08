@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "duccio/apns-php": "dev-master",
+        "duccio/apns-php": "1.*",
         "php-gcm/php-gcm": "1.1.*"
     },
     "autoload": {
