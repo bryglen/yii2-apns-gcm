@@ -48,6 +48,9 @@ class ApnsGcm extends Component
         return $this->_gcmClient;
     }
 
+    /**
+     * @return Apns
+     */
     public function getApnsClient()
     {
         if ($this->_apnsClient === null) {
@@ -98,7 +101,7 @@ class ApnsGcm extends Component
         $this->errors = [];
         if ($type == self::TYPE_GCM) {
             $client = $this->getGcmClient();
-            $result = $client->send($tokens, $text, $payloadData, $args);
+            $result = $client->sendMulti($tokens, $text, $payloadData, $args);
             $this->success = $client->success;
         } elseif ($type == self::TYPE_APNS) {
             $client = $this->getApnsClient();
