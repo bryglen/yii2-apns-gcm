@@ -98,7 +98,7 @@ class ApnsGcm extends Component
         $this->errors = [];
         if ($type == self::TYPE_GCM) {
             $client = $this->getGcmClient();
-            $result = $client->send($tokens, $text, $payloadData, $args);
+            $result = $client->sendMulti($tokens, $text, $payloadData, $args);
             $this->success = $client->success;
         } elseif ($type == self::TYPE_APNS) {
             $client = $this->getApnsClient();

@@ -55,47 +55,7 @@ class Gcm extends AbstractApnsGcm
      */
     public function send($token, $text, $payloadData = [], $args = [])
     {
-        // check if its dry run or not
-        if ($this->dryRun === true) {
-            $this->log($token, $text, $payloadData, $args);
-            return null;
-        }
-
-        $message = new \PHP_GCM\Message();
-        foreach ($args as $method => $value) {
-            $value = is_array($value) ? $value : [$value];
-            call_user_func_array([$message, $method], $value);
-        }
-        // set a custom payload data
-        $payloadData['message'] = $text;
-        foreach ($payloadData as $key => $value) {
-            $message->addData($key, $value);
-        }
-
-        try {
-            // send a message
-            $result = $this->getClient()->send($message, $token, $this->retryTimes);
-            $this->success = $result->getErrorCode() != null ? false : true;
-            if (!$this->success) {
-                $this->errors[] = $result->getErrorCode();
-            }
-            // HTTP code 200, but message sent with error
-        } catch (\InvalidArgumentException $e) {
-            $this->errors[] = $e->getMessage();
-            // $deviceRegistrationId was null
-        } catch (\PHP_GCM\InvalidRequestException $e) {
-            if ($e->getMessage()) {
-                $this->errors[] = $e->getMessage();
-            } else {
-                $this->errors[] = sprintf("Received error code %s from GCM Service", $e->getCode());
-            }
-            // server returned HTTP code other than 200 or 503
-        } catch (\Exception $e) {
-            $this->errors[] = $e->getMessage();
-            // message could not be sent
-        }
-
-        return $message;
+        return $this->sendMulti($token, $text, $payloadData = [], $args = []);
     }
 
     /**
