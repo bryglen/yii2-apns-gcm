@@ -55,7 +55,7 @@ class Gcm extends AbstractApnsGcm
      */
     public function send($token, $text, $payloadData = [], $args = [])
     {
-        return $this->sendMulti($token, $text, $payloadData = [], $args = []);
+        return $this->sendMulti($token, $text, $payloadData, $args);
     }
 
     /**
@@ -112,9 +112,16 @@ class Gcm extends AbstractApnsGcm
         }
         try {
             // send a message
-            $result = $this->getClient()->sendMulti($message, $tokens, $this->retryTimes);
-
-            $this->success = $result->getSuccess();;
+            $result = $this->getClient()->send($message, $tokens, $this->retryTimes);
+			
+			$this->success = $result->getFailure() ? false : true;
+			
+			// get errors
+			foreach ($result->getResults() as $key => $resultItem) {
+				if($resultItem->getErrorCode()) {
+					$this->errors['ERRORS'][$key] = $resultItem;
+				}
+			}
         } catch (\InvalidArgumentException $e) {
             $this->errors[] = $e->getMessage();
             // $deviceRegistrationId was null
