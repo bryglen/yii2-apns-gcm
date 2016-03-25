@@ -46,7 +46,7 @@ in your main.php your configuration would look like this
 		// custom name for the component, by default we will use 'gcm' and 'apns'
 		//'gcm' => 'gcm',
 		//'apns' => 'apns',
-	],
+	]
 ]
 ```
 
