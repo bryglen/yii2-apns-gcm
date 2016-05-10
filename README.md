@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist bryglen/yii2-apns-gcm "1.0.3"
+php composer.phar require --prefer-dist intersvyaz/yii2-apns-gcm "1.0.4"
 ```
 
 or add
 
 ```
-"bryglen/yii2-apns-gcm": "1.0.3"
+"intersvyaz/yii2-apns-gcm": "1.0.4"
 ```
 
 to the require section of your `composer.json` file.
@@ -46,7 +46,7 @@ in your main.php your configuration would look like this
 		// custom name for the component, by default we will use 'gcm' and 'apns'
 		//'gcm' => 'gcm',
 		//'apns' => 'apns',
-	],
+	]
 ]
 ```
 

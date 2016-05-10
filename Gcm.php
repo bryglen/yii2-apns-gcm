@@ -13,6 +13,12 @@ class Gcm extends AbstractApnsGcm
 {
     public $apiKey;
 
+    /**
+     * @var string Canonical registration ID.
+     * @link https://developers.google.com/cloud-messaging/registration#keeping-the-registration-state-in-sync
+     */
+    public $canonicalId;
+
     private $_client = null;
 
     public function init()
@@ -75,6 +81,7 @@ class Gcm extends AbstractApnsGcm
         try {
             // send a message
             $result = $this->getClient()->send($message, $token, $this->retryTimes);
+            $this->canonicalId = $result->getCanonicalRegistrationId();
             $this->success = $result->getErrorCode() != null ? false : true;
             if (!$this->success) {
                 $this->errors[] = $result->getErrorCode();
@@ -154,7 +161,7 @@ class Gcm extends AbstractApnsGcm
             // send a message
             $result = $this->getClient()->sendMulti($message, $tokens, $this->retryTimes);
 
-            $this->success = $result->getSuccess();;
+            $this->success = $result->getSuccess();
         } catch (\InvalidArgumentException $e) {
             $this->errors[] = $e->getMessage();
             // $deviceRegistrationId was null
