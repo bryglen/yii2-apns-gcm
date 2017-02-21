@@ -155,7 +155,7 @@ class Gcm extends AbstractApnsGcm
             $result = $this->getClient()->sendMulti($message, $tokens, $this->retryTimes);
             $this->success = $result->getSuccess();
             if (!$this->success) {
-                foreach($result->getResults() as $i => $r) {
+                foreach ($result->getResults() as $i => $r) {
                     $this->errors[$i+1] = $r->getErrorCode();
                 }
             }
