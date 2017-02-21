@@ -153,8 +153,12 @@ class Gcm extends AbstractApnsGcm
         try {
             // send a message
             $result = $this->getClient()->sendMulti($message, $tokens, $this->retryTimes);
-
             $this->success = $result->getSuccess();
+            if (!$this->success) {
+                foreach($result->getResults() as $r) {
+                    $this->errors[] = $r->getErrorCode();
+                }
+            }
         } catch (\InvalidArgumentException $e) {
             $this->errors[] = $e->getMessage();
             // $deviceRegistrationId was null
