@@ -130,8 +130,18 @@ class Apns extends AbstractApnsGcm
             return null;
         }
 
-        $message = new \ApnsPHP_Message($token);
-        $message->setText($text);
+        if (is_array($text)) {
+            $message = new \ApnsPHP_Message_Custom($token);
+            if (isset($text['title'])) {
+                $message->setTitle($text['title']);
+            }
+            if (isset($text['body'])) {
+                $message->setText($text['body']);
+            }
+        } else {
+            $message = new \ApnsPHP_Message($token);
+            $message->setText($text);
+        }
         foreach ($args as $method => $value) {
             if (strpos($method, 'set') === false) {
                 $method = 'set' . ucfirst($method);
@@ -171,11 +181,21 @@ class Apns extends AbstractApnsGcm
             return null;
         }
 
-        $message = new \ApnsPHP_Message();
+        if (is_array($text)) {
+            $message = new \ApnsPHP_Message_Custom();
+            if (isset($text['title'])) {
+                $message->setTitle($text['title']);
+            }
+            if (isset($text['body'])) {
+                $message->setText($text['body']);
+            }
+        } else {
+            $message = new \ApnsPHP_Message();
+            $message->setText($text);
+        }
         foreach ($tokens as $token) {
             $message->addRecipient($token);
         }
-        $message->setText($text);
         foreach ($args as $method => $value) {
             if (strpos($message, 'set') === false) {
                 $method = 'set' . ucfirst($method);
