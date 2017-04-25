@@ -15,17 +15,16 @@ class Gcm extends AbstractApnsGcm
 
     private $_client = null;
 
-    public function init()
+    private function _checkConfig()
     {
         if (!$this->apiKey) {
             throw new InvalidConfigException('Api key cannot be empty');
         }
-
-        parent::init();
     }
 
     public function getClient()
     {
+        $this->_checkConfig();
         if ($this->_client === null) {
             $this->_client = new \PHP_GCM\Sender($this->apiKey);
         }
