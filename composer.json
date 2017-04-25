@@ -2,7 +2,7 @@
     "name": "bryglen/yii2-apns-gcm",
     "description": "Yii 2 Apns and Gcm together",
     "type": "yii2-extension",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "keywords": ["yii2"," extension"," apns"," gcm"],
     "license": "MIT",
     "authors": [
