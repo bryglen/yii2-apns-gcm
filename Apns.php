@@ -36,6 +36,7 @@ class Apns extends AbstractApnsGcm
     public $environment;
 
     public $pemFile;
+    public $pemFilePassword = false;
 
     /**
      * additional information for the push provider
@@ -79,6 +80,10 @@ class Apns extends AbstractApnsGcm
                 $this->environment == self::ENVIRONMENT_PRODUCTION ? \ApnsPHP_Push::ENVIRONMENT_PRODUCTION : \ApnsPHP_Push::ENVIRONMENT_SANDBOX,
                 $this->pemFile
             );
+
+            if ($this->pemFilePassword !== false) {
+                $this->_client->setProviderCertificatePassphrase($this->pemFilePassword);
+            }
 
             $this->options['logger'] = new $this->logger;
             if ($this->retryTimes) {
