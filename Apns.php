@@ -47,6 +47,42 @@ class Apns extends AbstractApnsGcm
 
     public function init()
     {
+        
+    }
+
+    public function setEnvironment($environment)
+    {
+        if ($environment) {
+            $this->environment = $environment;
+            return;
+        }
+        return -1;
+    }
+
+    public function setPemFile($pemFile)
+    {
+        if ($pemFile) {
+            $this->pemFile = $pemFile;
+            return;
+        }
+        return -1;
+    }
+
+    public function setOptions($options)
+    {
+        if ($options && is_array($options)) {
+            $this->options = $options;
+            return;
+        }
+        return -1;
+    }
+
+    public function __init($pemFile = null, $options = null, $environment = null)
+    {
+        $this->setEnvironment($environment);
+        $this->setPemFile($pemFile);
+        $this->setOptions($options);
+
         if (!in_array($this->environment, [self::ENVIRONMENT_SANDBOX, self::ENVIRONMENT_PRODUCTION])) {
             throw new InvalidConfigException('Environment is invalid.');
         }
@@ -61,7 +97,7 @@ class Apns extends AbstractApnsGcm
                     $this->getClient()->disconnect();
                 }
             }
-        );
+        );   
     }
 
     public function closeConnection()
