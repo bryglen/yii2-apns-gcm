@@ -12,6 +12,11 @@ use yii\base\InvalidConfigException;
 class Gcm extends AbstractApnsGcm
 {
     public $apiKey;
+    /**
+     * @var string Canonical registration ID.
+     * @link https://developers.google.com/cloud-messaging/registration#keeping-the-registration-state-in-sync
+     */
+    public $canonicalId;
 
     private $_client = null;
 
@@ -75,6 +80,7 @@ class Gcm extends AbstractApnsGcm
         try {
             // send a message
             $result = $this->getClient()->send($message, $token, $this->retryTimes);
+            $this->canonicalId = $result->getCanonicalRegistrationId();
             $this->success = $result->getErrorCode() != null ? false : true;
             if (!$this->success) {
                 $this->errors[] = $result->getErrorCode();
