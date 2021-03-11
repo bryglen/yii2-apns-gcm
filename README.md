@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist intersvyaz/yii2-apns-gcm "1.0.4"
+php composer.phar require --prefer-dist intersvyaz/yii2-apns-gcm "1.0.5"
 ```
 
 or add
 
 ```
-"intersvyaz/yii2-apns-gcm": "1.0.4"
+"intersvyaz/yii2-apns-gcm": "1.0.5"
 ```
 
 to the require section of your `composer.json` file.
@@ -49,10 +49,6 @@ in your main.php your configuration would look like this
 	]
 ]
 ```
-
-Online Tester
--------------
-Please visit the link for online tester [http://apns-gcm.bryantan.info](http://apns-gcm.bryantan.info)
 
 Usage
 -----
